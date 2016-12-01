@@ -184,4 +184,17 @@ class ProviderWrapper implements ProviderInterface
     {
         return $this->getProvider()->getReflectionClassForObject($instance);
     }
+
+    /**
+     * Injects the dependencies of the passed instance.
+     *
+     * @param object      $instance  The instance to inject the dependencies for
+     * @param string|null $sessionId The session-ID, necessary to inject stateful session beans (SFBs)
+     *
+     * @return void
+     */
+    public function injectDependencies($instance, $sessionId = null)
+    {
+        $this->getProvider()->injectDependencies($instance, $sessionId);
+    }
 }
