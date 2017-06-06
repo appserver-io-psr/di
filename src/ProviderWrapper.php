@@ -20,7 +20,6 @@
 
 namespace AppserverIo\Psr\Di;
 
-use AppserverIo\Psr\Application\ManagerInterface;
 use AppserverIo\Lang\Reflection\AnnotationInterface;
 use AppserverIo\Psr\Application\ApplicationInterface;
 

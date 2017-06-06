@@ -46,7 +46,7 @@ class ProviderWrapperTest extends \PHPUnit_Framework_TestCase
         // configure the stub
         $stub->expects($this->once())
              ->method('newInstance')
-             ->with($className = '\stdClass', $sessionId = md5('test'), $args = array())
+             ->with($className = '\stdClass')
              ->will($this->returnValue(new \stdClass()));
 
         // create a new wrapper instance
@@ -54,6 +54,6 @@ class ProviderWrapperTest extends \PHPUnit_Framework_TestCase
         $wrapper->injectProvider($stub);
 
         // check if the correct instance will be returned
-        $this->assertInstanceOf('\stdClass', $wrapper->newInstance($className, $sessionId, $args));
+        $this->assertInstanceOf('\stdClass', $wrapper->newInstance($className));
     }
 }

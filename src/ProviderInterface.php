@@ -45,13 +45,11 @@ interface ProviderInterface extends ManagerInterface
     /**
      * Returns a new instance of the passed class name.
      *
-     * @param string      $className The fully qualified class name to return the instance for
-     * @param string|null $sessionId The session-ID, necessary to inject stateful session beans (SFBs)
-     * @param array       $args      Arguments to pass to the constructor of the instance
+     * @param string $className The fully qualified class name to return the instance for
      *
      * @return object The instance itself
      */
-    public function newInstance($className, $sessionId = null, array $args = array());
+    public function newInstance($className);
 
     /**
      * Returns the naming context instance.
@@ -109,10 +107,9 @@ interface ProviderInterface extends ManagerInterface
     /**
      * Injects the dependencies of the passed instance.
      *
-     * @param object      $instance  The instance to inject the dependencies for
-     * @param string|null $sessionId The session-ID, necessary to inject stateful session beans (SFBs)
+     * @param object $instance The instance to inject the dependencies for
      *
      * @return void
      */
-    public function injectDependencies($instance, $sessionId = null);
+    public function injectDependencies($instance);
 }
