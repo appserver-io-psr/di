@@ -6,6 +6,7 @@
 
 ## Features
 
+* Switch to latest appserver-io/epb branch ~4.0
 * Switch to latest appserver-io/lang branch ~3.0
 * Remove parameters session ID and args from ProviderInterface::newInstance() method
 * Remove parameter session ID from ProviderInterface::injectDependencies() method
