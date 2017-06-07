@@ -20,6 +20,7 @@
 
 namespace AppserverIo\Psr\Di;
 
+use Psr\Container\ContainerInterface;
 use AppserverIo\Psr\Application\ManagerInterface;
 use AppserverIo\Lang\Reflection\AnnotationInterface;
 
@@ -32,7 +33,7 @@ use AppserverIo\Lang\Reflection\AnnotationInterface;
  * @link      https://github.com/appserver-io-psr/di
  * @link      http://www.appserver.io
  */
-interface ProviderInterface extends ManagerInterface
+interface ProviderInterface extends ManagerInterface, ContainerInterface
 {
 
     /**
@@ -41,15 +42,6 @@ interface ProviderInterface extends ManagerInterface
      * @var string
      */
     const IDENTIFIER = 'ProviderInterface';
-
-    /**
-     * Returns a new instance of the passed class name.
-     *
-     * @param string $className The fully qualified class name to return the instance for
-     *
-     * @return object The instance itself
-     */
-    public function newInstance($className);
 
     /**
      * Returns the naming context instance.
@@ -103,6 +95,16 @@ interface ProviderInterface extends ManagerInterface
      * @see \AppserverIo\Psr\Di\ProviderInterface::getReflectionClass()
      */
     public function getReflectionClassForObject($instance);
+
+    /**
+     * Returns a new instance of the passed class name.
+     *
+     * @param string $className The fully qualified class name to return the instance for
+     *
+     * @return object The instance itself
+     * @deprecated Since 1.1.5 Use \Psr\Container\ContainerInterface::get() instead
+     */
+    public function newInstance($className);
 
     /**
      * Injects the dependencies of the passed instance.

@@ -100,20 +100,6 @@ class ProviderWrapper implements ProviderInterface
     }
 
     /**
-     * Returns a new instance of the passed class name.
-     *
-     * @param string      $className The fully qualified class name to return the instance for
-     * @param string|null $sessionId The session-ID, necessary to inject stateful session beans (SFBs)
-     * @param array       $args      Arguments to pass to the constructor of the instance
-     *
-     * @return object The instance itself
-     */
-    public function newInstance($className, $sessionId = null, array $args = array())
-    {
-        return $this->getProvider()->newInstance($className, $sessionId, $args);
-    }
-
-    /**
      * Returns the naming context instance.
      *
      * @return \AppserverIo\Psr\Naming\InitialContext The naming context instance
@@ -185,6 +171,19 @@ class ProviderWrapper implements ProviderInterface
     }
 
     /**
+     * Returns a new instance of the passed class name.
+     *
+     * @param string $className The fully qualified class name to return the instance for
+     *
+     * @return object The instance itself
+     * @deprecated Since 1.1.5 Use \Psr\Container\ContainerInterface::get() instead
+     */
+    public function newInstance($className)
+    {
+        return $this->getProvider()->newInstance($className);
+    }
+
+    /**
      * Injects the dependencies of the passed instance.
      *
      * @param object      $instance  The instance to inject the dependencies for
@@ -192,8 +191,39 @@ class ProviderWrapper implements ProviderInterface
      *
      * @return void
      */
-    public function injectDependencies($instance, $sessionId = null)
+    public function injectDependencies($instance)
     {
-        $this->getProvider()->injectDependencies($instance, $sessionId);
+        $this->getProvider()->injectDependencies($instance);
+    }
+
+    /**
+     * Finds an entry of the container by its identifier and returns it.
+     *
+     * @param string $id Identifier of the entry to look for
+     *
+     * @throws \Psr\Container\NotFoundExceptionInterface  No entry was found for **this** identifier.
+     * @throws \Psr\Container\ContainerExceptionInterface Error while retrieving the entry.
+     *
+     * @return mixed Entry.
+     */
+    public function get($id)
+    {
+        return $this->provider->get($id);
+    }
+
+    /**
+     * Returns true if the container can return an entry for the given identifier.
+     * Returns false otherwise.
+     *
+     * `has($id)` returning TRUE does not mean that `get($id)` will not throw an exception.
+     * It does however mean that `get($id)` will not throw a `NotFoundExceptionInterface`.
+     *
+     * @param string $id Identifier of the entry to look for.
+     *
+     * @return boolean TRUE if an entroy for the given identifier exists, else FALSE
+     */
+    public function has($id)
+    {
+        return $this->provider->has($id);
     }
 }
