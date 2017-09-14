@@ -1,4 +1,4 @@
-# Version 3.0.1
+# Version 2.0.1
 
 ## Bugfixes
 
@@ -7,17 +7,6 @@
 ## Features
 
 * Switch to latest appserver-io-psr/epb version 4.0.0
-
-# Version 3.0.0
-
-## Bugfixes
-
-* None
-
-## Features
-
-* Remove parameters session ID and args from ProviderInterface::newInstance() method
-* Remove parameter session ID from ProviderInterface::injectDependencies() method
 
 # Version 2.0.0
 
