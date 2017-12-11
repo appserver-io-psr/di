@@ -21,6 +21,7 @@
 namespace AppserverIo\Psr\Di;
 
 use AppserverIo\Lang\Reflection\AnnotationInterface;
+use AppserverIo\Psr\Deployment\DescriptorInterface;
 use AppserverIo\Psr\Application\ApplicationInterface;
 
 /**
@@ -174,25 +175,27 @@ class ProviderWrapper implements ProviderInterface
      * Returns a new instance of the passed class name.
      *
      * @param string $className The fully qualified class name to return the instance for
+     * @param array  $args      Arguments to pass to the constructor of the instance
      *
      * @return object The instance itself
-     * @deprecated Since 1.1.5 Use \Psr\Container\ContainerInterface::get() instead
      */
-    public function newInstance($className)
+    public function newInstance($className, array $args = array())
     {
-        return $this->getProvider()->newInstance($className);
+        return $this->getProvider()->newInstance($className, $args);
     }
 
     /**
-     * Injects the dependencies of the passed instance.
+     * Injects the dependencies of the passed instance defined in the object descriptor.
      *
-     * @param object $instance The instance to inject the dependencies for
+     *
+     * @param \AppserverIo\Psr\Deployment\DescriptorInterface $objectDescriptor The object descriptor with the dependencies
+     * @param object                                          $instance         The instance to inject the dependencies for
      *
      * @return void
      */
-    public function injectDependencies($instance)
+    public function injectDependencies(DescriptorInterface $objectDescriptor, $instance)
     {
-        $this->getProvider()->injectDependencies($instance);
+        $this->getProvider()->injectDependencies($objectDescriptor, $instance);
     }
 
     /**

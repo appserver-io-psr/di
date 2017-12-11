@@ -37,7 +37,7 @@ class ObjectManagerWrapper implements ObjectManagerInterface
     /**
      * The object manager instance to be wrapped.
      *
-     * @var \AppserverIo\Di\ObjectManagerInterface
+     * @var \AppserverIo\Psr\Di\ObjectManagerInterface
      */
     protected $objectManager;
 
@@ -125,5 +125,34 @@ class ObjectManagerWrapper implements ObjectManagerInterface
     public function setObjectDescriptor(DescriptorInterface $objectDescriptor)
     {
         $this->getObjectManager()->setObjectDescriptor($objectDescriptor);
+    }
+
+    /**
+     * Adds the passed object descriptor to the object manager. If the merge flag is TRUE, then
+     * we check if already an object descriptor for the class exists before they will be merged.
+     *
+     * When we merge object descriptors this means, that the values of the passed descriptor
+     * will override the existing ones.
+     *
+     * @param \AppserverIo\Psr\Deployment\DescriptorInterface $objectDescriptor The object descriptor to add
+     * @param boolean                                         $merge            TRUE if we want to merge with an existing object descriptor
+     *
+     * @return void
+     */
+    public function addPreference(DescriptorInterface $objectDescriptor, $merge = false)
+    {
+        $this->getObjectManager()->addPreference($objectDescriptor);
+    }
+
+    /**
+     * Return's the preference for the passed class name.
+     *
+     * @param string $className The class name to return the preference for
+     *
+     * @return string The preference or the original class name
+     */
+    public function getPreference($className)
+    {
+        return $this->getObjectManager()->getPreference($className);
     }
 }
