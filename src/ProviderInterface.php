@@ -20,8 +20,10 @@
 
 namespace AppserverIo\Psr\Di;
 
+use Psr\Container\ContainerInterface;
 use AppserverIo\Psr\Application\ManagerInterface;
 use AppserverIo\Lang\Reflection\AnnotationInterface;
+use AppserverIo\Psr\Deployment\DescriptorInterface;
 
 /**
  * Interface for all dependency injection provider implementations.
@@ -32,7 +34,7 @@ use AppserverIo\Lang\Reflection\AnnotationInterface;
  * @link      https://github.com/appserver-io-psr/di
  * @link      http://www.appserver.io
  */
-interface ProviderInterface extends ManagerInterface
+interface ProviderInterface extends ManagerInterface, ContainerInterface
 {
 
     /**
@@ -41,17 +43,6 @@ interface ProviderInterface extends ManagerInterface
      * @var string
      */
     const IDENTIFIER = 'ProviderInterface';
-
-    /**
-     * Returns a new instance of the passed class name.
-     *
-     * @param string      $className The fully qualified class name to return the instance for
-     * @param string|null $sessionId The session-ID, necessary to inject stateful session beans (SFBs)
-     * @param array       $args      Arguments to pass to the constructor of the instance
-     *
-     * @return object The instance itself
-     */
-    public function newInstance($className, $sessionId = null, array $args = array());
 
     /**
      * Returns the naming context instance.
@@ -107,11 +98,23 @@ interface ProviderInterface extends ManagerInterface
     public function getReflectionClassForObject($instance);
 
     /**
-     * Injects the dependencies of the passed instance.
+     * Returns a new instance of the passed class name.
      *
-     * @param object $instance The instance to inject the dependencies for
+     * @param string $className The fully qualified class name to return the instance for
+     * @param array  $args      Arguments to pass to the constructor of the instance
+     *
+     * @return object The instance itself
+     */
+    public function newInstance($className, array $args = array());
+
+    /**
+     * Injects the dependencies of the passed instance defined in the object descriptor.
+     *
+     *
+     * @param \AppserverIo\Psr\Deployment\DescriptorInterface $objectDescriptor The object descriptor with the dependencies
+     * @param object                                          $instance         The instance to inject the dependencies for
      *
      * @return void
      */
-    public function injectDependencies($instance);
+    public function injectDependencies(DescriptorInterface $objectDescriptor, $instance);
 }

@@ -58,12 +58,12 @@ interface ObjectManagerInterface
     /**
      * Returns the object descriptor if we've registered it.
      *
-     * @param string $className The class name we want to return the object descriptor for
+     * @param string $name The name we want to return the object descriptor for
      *
      * @return \AppserverIo\Psr\Deployment\DescriptorInterface|null The requested object descriptor instance
      * @throws \AppserverIo\Psr\Di\UnknownObjectDescriptorException Is thrown if someone tries to access an unknown object desciptor
      */
-    public function getObjectDescriptor($className);
+    public function getObjectDescriptor($name);
 
     /**
      * Returns the storage with the object descriptors.
@@ -75,11 +75,11 @@ interface ObjectManagerInterface
     /**
      * Query if we've an object descriptor for the passed class name.
      *
-     * @param string $className The class name we query for a object descriptor
+     * @param string $name The name we query for a object descriptor
      *
      * @return boolean TRUE if an object descriptor has been registered, else FALSE
      */
-    public function hasObjectDescriptor($className);
+    public function hasObjectDescriptor($name);
 
     /**
      * Registers the passed object descriptor under its class name.
@@ -89,4 +89,27 @@ interface ObjectManagerInterface
      * @return void
      */
     public function setObjectDescriptor(DescriptorInterface $objectDescriptor);
+
+    /**
+     * Adds the passed object descriptor to the object manager. If the merge flag is TRUE, then
+     * we check if already an object descriptor for the class exists before they will be merged.
+     *
+     * When we merge object descriptors this means, that the values of the passed descriptor
+     * will override the existing ones.
+     *
+     * @param \AppserverIo\Psr\Deployment\DescriptorInterface $objectDescriptor The object descriptor to add
+     * @param boolean                                         $merge            TRUE if we want to merge with an existing object descriptor
+     *
+     * @return void
+     */
+    public function addPreference(DescriptorInterface $objectDescriptor, $merge = false);
+
+    /**
+     * Return's the preference for the passed class name.
+     *
+     * @param string $className The class name to return the preference for
+     *
+     * @return string The preference or the original class name
+     */
+    public function getPreference($className);
 }
